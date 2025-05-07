@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AR切り替えデモ</title>
+    <style>
+        #arView,
+        #siteView {
+            width: 100%;
+            height: 100vh;
+            display: none;
+        }
+
+        #siteView {
+            background-color: #f0f0f0;
+            padding: 2rem;
+        }
+
+        #toggleBtn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 切り替えボタン -->
+    <button id="toggleBtn">AR表示に切り替え</button>
+
+    <!-- 通常サイト画面 -->
+    <div id="siteView">
+        <h1>通常サイト画面</h1>
+        <p>ここにサイトのコンテンツが表示されます。</p>
+    </div>
+
+    <!-- AR画面（A-Frameなどを使う） -->
+    <div id="arView">
+        <a-scene embedded arjs>
+            <a-box position="0 0.5 0" color="tomato"></a-box>
+            <a-camera-static></a-camera-static>
+        </a-scene>
+    </div>
+
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://rawcdn.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+    <script>
+        const arView = document.getElementById('arView');
+        const siteView = document.getElementById('siteView');
+        const toggleBtn = document.getElementById('toggleBtn');
+
+        let isAR = false;
+
+        function toggleView() {
+            isAR = !isAR;
+            arView.style.display = isAR ? 'block' : 'none';
+            siteView.style.display = isAR ? 'none' : 'block';
+            toggleBtn.textContent = isAR ? 'サイト表示に切り替え' : 'AR表示に切り替え';
+        }
+
+        toggleBtn.addEventListener('click', toggleView);
+
+        // 初期表示
+        toggleView(); // ← 最初にサイトを表示するならコメントアウトしてもOK
+    </script>
+
+</body>
+
+</html>
